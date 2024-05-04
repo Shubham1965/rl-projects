@@ -213,7 +213,7 @@ class GridWorldVisualization:
         self.grid_world = grid_world
         self.grid = np.zeros((grid_world.num_rows, grid_world.num_cols))
 
-    def plot_grid_with_arrows(self, grid_world, grid_dict):
+    def plot_grid_with_arrows(self, grid_world: GridWorld, grid_dict: dict):
         """
         Plots a grid world with arrows indicating possible actions.
 
@@ -224,7 +224,7 @@ class GridWorldVisualization:
         Returns:
             None
         """
-        def plot_arrow(coord, direction):
+        def plot_arrow(coord: tuple, direction: str):
             dx, dy = {'up': (0, -0.3), 'down': (0, 0.3), 'left': (-0.3, 0), 'right': (0.3, 0)}[direction]
             plt.arrow(coord[1], coord[0], dx, dy, head_width=0.1, head_length=0.1, fc='k', ec='k')
 
