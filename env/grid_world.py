@@ -199,7 +199,6 @@ class GridWorld:
             print()
 
 
-# TODO: Work on the plot_grid and update_values functions
 class GridWorldVisualization:
     def __init__(self, grid_world: GridWorld):
         """
@@ -215,8 +214,18 @@ class GridWorldVisualization:
         self.grid = np.zeros((grid_world.num_rows, grid_world.num_cols))
 
     def plot_grid_with_arrows(self, grid_world, grid_dict):
+        """
+        Plots a grid world with arrows indicating possible actions.
+
+        Parameters:
+            grid_world (GridWorld): The grid world to plot.
+            grid_dict (dict): A dictionary mapping coordinates to a dictionary of actions and their values.
+
+        Returns:
+            None
+        """
         def plot_arrow(coord, direction):
-            dx, dy = {'up': (0, -0.4), 'down': (0, 0.4), 'left': (-0.4, 0), 'right': (0.4, 0)}[direction]
+            dx, dy = {'up': (0, -0.3), 'down': (0, 0.3), 'left': (-0.3, 0), 'right': (0.3, 0)}[direction]
             plt.arrow(coord[1], coord[0], dx, dy, head_width=0.1, head_length=0.1, fc='k', ec='k')
 
         grid = np.zeros((grid_world.num_rows, grid_world.num_cols))
@@ -224,11 +233,11 @@ class GridWorldVisualization:
         for coord, actions in grid_dict.items():
             if actions:
                 for action, val in actions.items():
-                    if val == 1:
+                    if val == 1 or val == 0.25:
                         grid[coord[0], coord[1]] = 1
                         plot_arrow(coord, action)
             else:
-                grid[coord[0], coord[1]] = 1  # Goal
+                grid[coord[0], coord[1]] = 1  # Terminal state
 
         plt.imshow(grid, cmap='gray', origin='upper')
 

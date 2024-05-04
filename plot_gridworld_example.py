@@ -15,7 +15,7 @@ if __name__ == '__main__':
     
 
     visualization = GridWorldVisualization(grid_world)
-
+    visualization.plot_grid_with_arrows(grid_world, grid_world.random_policy())
 
 
 
