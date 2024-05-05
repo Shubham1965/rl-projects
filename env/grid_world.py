@@ -29,23 +29,29 @@ class GridWorld:
         self.all_states = [(i, j) for i in range(self.num_rows) for j in range(self.num_cols)]
         self.num_states = self.num_cols * self.num_rows 
 
-    def add_obstacles(self, obstacles : list):
+    def reset(self):
         """
-        Adds obstacles to the grid world.
-
-        Parameters:
-            obstacles (list): A list of obstacle coordinates in the grid.
+        Resets the state of the object to its initial state.
 
         Returns:
-            None
+            tuple: The starting state of the grid world.
         """
-        self.obstacles = obstacles
 
-        for obstacle in obstacles:
-            self.all_states.remove(obstacle)
-        
-        self.num_states = len(self.all_states)
+        return self.start_state
 
+    def is_obstacle(self, state: tuple) -> bool:
+        """
+        Check if the given state is an obstacle in the grid world.
+
+        Parameters:
+            state (tuple): The state to check in the form of (row, col).
+
+        Returns:
+            bool: True if the state is an obstacle, False otherwise.
+        """
+
+        return state in self.obstacles
+    
     def is_valid_state(self, state: tuple) -> bool:
         """
         Check if the given state is valid in the grid world.
@@ -79,7 +85,19 @@ class GridWorld:
         """
         return state == self.goal_state
 
-    def add_rewards(self, reward_step: float, reward_goal: float):
+    def add_obstacles(self, obstacles : list):
+        """
+        Adds obstacles to the grid world.
+
+        Parameters:
+            obstacles (list): A list of obstacle coordinates in the grid.
+
+        Returns:
+            None
+        """
+        self.obstacles = obstacles
+
+    def add_rewards(self, reward_step: float, reward_goal: float, reward_obstacle: float = None):
         """
         Set the reward values for the step and goal states.
 
@@ -93,6 +111,9 @@ class GridWorld:
         self.reward_step = reward_step
         self.reward_goal = reward_goal
 
+        if reward_obstacle is not None:
+            self.reward_obstacle = reward_obstacle
+
     def add_discout_factor(self, gamma: float):
         """
         Set the discount factor for the GridWorld.
@@ -105,7 +126,25 @@ class GridWorld:
         """
         self.gamma = gamma
 
-    def get_next_state(self, state: tuple, action: str) -> tuple:
+    def get_actions(self, state: tuple) -> list:
+        """
+        Returns the possible actions for the given state.
+
+        Args:
+            state (tuple): The current state of the grid world.
+
+        Returns:
+            list: A list of possible actions.
+        """
+        if state in self.obstacles:
+            return []
+        
+        if state == self.goal_state:
+            return []
+        
+        return self.actions
+    
+    def next_state(self, state: tuple, action: str) -> tuple:
         """
         Calculate the next state based on the current state and action.
         
@@ -130,10 +169,50 @@ class GridWorld:
         
         next_state = tuple(next_state)
         state = tuple(state)
+
         if self.is_valid_state(next_state):
             return next_state
         else:
             return state # stay in the same state
+        
+    def step(self, state: tuple, action: str) -> tuple:
+        """
+        Perform a step in the grid world environment.
+
+        Args:
+            state (tuple): The current state of the grid world in the form of (row, col).
+            action (str): The action to take in the grid world. Can be "up", "down", "left", or "right".
+
+        Returns:
+            tuple: A tuple containing the next state, the reward obtained, and a boolean indicating whether the episode is over.
+        """
+        
+        state = list(state)
+        next_state = state.copy()
+
+        if action == "up":
+            next_state[0] -= 1
+        elif action == "down":
+            next_state[0] += 1
+        elif action == "left":
+            next_state[1] -= 1
+        elif action == "right":
+            next_state[1] += 1
+        
+        next_state = tuple(next_state)
+        state = tuple(state)
+
+        if self.is_obstacle(next_state):
+            return state, self.reward_obstacle, True
+        elif self.is_terminal(next_state):
+            return next_state, self.reward_goal, True
+        else:
+            row, col = next_state
+            if 0 <= row < self.num_rows and 0 <= col < self.num_cols : 
+                return next_state, self.reward_step, False
+            else:
+                return state, self.reward_step, False
+        
 
     def get_reward(self, state: tuple) -> float:
         """
@@ -149,8 +228,12 @@ class GridWorld:
             None
         """
 
-        if self.is_valid_state(state):
-            return self.reward_goal if self.is_terminal(state) else self.reward_step
+        if state in self.obstacles:
+            return self.reward_obstacle
+        elif state == self.goal_state:
+            return self.reward_goal
+        else:
+            return self.reward_step
 
     
     def dynamics(self):
@@ -168,10 +251,12 @@ class GridWorld:
             None
         """
 
-        # Initialize the environment's dyanmics 
-        # self.V = {state: 0 for state in self.all_states}
-        # self.Q = {state: {action: 0 for action in self.actions} for state in self.all_states}
-        self.P = {state: {action: [self.get_next_state(state, action), self.get_reward(self.get_next_state(state, action)), 1] for action in self.actions} for state in self.all_states}
+        # Initialize the environment's dyanmics using the `P` dictionary
+        for obstacle in self.obstacles:
+            self.all_states.remove(obstacle)
+        
+        self.num_states = len(self.all_states)
+        self.P = {state: {action: [self.next_state(state, action), self.get_reward(self.next_state(state, action)), 1] for action in self.actions} for state in self.all_states}
 
     def random_policy(self):
         """
@@ -183,9 +268,14 @@ class GridWorld:
             The probabilities are all equal to 0.25.
         """
         
+        # Generate a random policy
         return {state: {action: 0.25 for action in self.actions} for state in self.all_states}
 
     def visualize_gridWorld(self):
+        """
+        Simple visualization of the grid world based on the start state, goal state, and obstacles.
+        """
+
         for i in range(self.num_rows):
             for j in range(self.num_cols):
                 if [i, j] in self.start_state.tolist():
@@ -213,7 +303,7 @@ class GridWorldVisualization:
         self.grid_world = grid_world
         self.grid = np.zeros((grid_world.num_rows, grid_world.num_cols))
 
-    def plot_grid_with_arrows(self, grid_world: GridWorld, grid_dict: dict):
+    def plot_grid_with_arrows(self, grid_world: GridWorld, grid_dict: dict, fig_name: str, policy: dict = None):
         """
         Plots a grid world with arrows indicating possible actions.
 
@@ -241,16 +331,31 @@ class GridWorldVisualization:
 
         plt.imshow(grid, cmap='gray', origin='upper')
 
-        # Highlighting start state and goal state
-        plt.scatter(grid_world.start_state[1], grid_world.start_state[0], color='green', marker='o', s=100, label='Start')
-        plt.scatter(grid_world.goal_state[1], grid_world.goal_state[0], color='red', marker='x', s=100, label='Goal')
+        # Highlighting start state
+        plt.scatter(grid_world.start_state[1], grid_world.start_state[0], color='green', marker='s', s=100, label='Start')
+
+        # Highlight the optimal trajectory using the policy starting from the start state
+        state = grid_world.start_state
+        while state != grid_world.goal_state:
+            if policy is not None:
+                action = policy[state]
+            else:
+                action = max(grid_dict[state], key=grid_dict[state].get) 
+            state = grid_world.next_state(state, action)
+            plt.scatter(state[1], state[0], color='blue', marker='s', s=100)
+        
+        # Highlight the goal state
+        plt.scatter(grid_world.goal_state[1], grid_world.goal_state[0], color='red', marker='s', s=100, label='Goal')
 
         plt.yticks(np.arange(-0.5, grid_world.num_rows+0.5, step=1))
         plt.xticks(np.arange(-0.5, grid_world.num_cols+0.5, step=1))
         plt.grid()
 
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.0)
+        plt.savefig('results/' + fig_name + '.png')
         plt.show()
+
+
 
 
 

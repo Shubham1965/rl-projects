@@ -31,7 +31,7 @@ V, policy = ValueIteration(grid_world, theta=0.0001)
 
 # Visualization results:
 visualization = GridWorldVisualization(grid_world)
-visualization.plot_grid_with_arrows(grid_world, policy)
+visualization.plot_grid_with_arrows(grid_world, policy, fig_name="value_iteration_gridworld")
 
 
 
