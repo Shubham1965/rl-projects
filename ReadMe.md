@@ -74,13 +74,13 @@ In fact, the policy evaluation step of policy iteration can be truncated in seve
 
 Temporal Difference (TD) learning is a type of reinforcement learning algorithm that combines aspects of both dynamic programming and Monte Carlo methods.
 
-DP methods involve solving problems by breaking them down into smaller subproblems, typically using a bottom-up approach. In the context of reinforcement learning, DP algorithms like the Bellman equation are used to calculate the value function by iteratively updating estimates based on the expected future rewards.
+DP methods involve solving problems by breaking them down into smaller subproblems, typically using a bottom-up approach. In the context of reinforcement learning, DP algorithms (like the Bellman equation) are used to calculate the value function by iteratively updating estimates based on the expected future rewards.
 
 Monte Carlo (MC) methods, on the other hand, involve learning from experience by averaging sampled returns obtained from complete episodes. MC methods do not require a model of the environment and are often used in situations where the environment is stochastic or episodic.
 
 Temporal Difference learning bridges the gap between DP and MC methods by updating value estimates based on a combination of bootstrapping (using current estimates to update future estimates) and sampling (using actual experiences). Instead of waiting until the end of an episode to update value estimates, TD methods update them after each time step based on the observed reward and the estimate of the value of the next state.
 
-Here, I'm showing you the results on the classic cliff world example using SARSA (on-policy control TD(0)) and Q-learning (on-policy control TD(0)). Fell free to run the scripts named ``sarsa_cliffworld.py`` and ``qLearning_cliffworld.py ``.
+Here, I'm showing you the results on the classic cliff world example using SARSA (on-policy control TD(0)) and Q-learning (off-policy control TD(0)). Fell free to run the scripts named ``sarsa_cliffworld.py`` and ``qLearning_cliffworld.py ``.
 
 
 - SARSA Rewards: 
