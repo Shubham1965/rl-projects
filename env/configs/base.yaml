@@ -1,0 +1,24 @@
+# Global defaults; every scenario extends/overrides these
+seed: 0
+device: auto
+train_steps: 400000
+eval_interval: 5000
+eval_episodes: 10
+log_interval: 1000
+
+env:
+  id: CartPole-v1
+  frame_stack: 1
+  normalize_obs: false
+  normalize_reward: false
+
+model:
+  hidden_sizes: [256, 256]
+  activation: tanh
+
+optimizer:
+  lr: 0.0003
+  weight_decay: 0.0
+
+# For reproducibility
+deterministic_torch: false

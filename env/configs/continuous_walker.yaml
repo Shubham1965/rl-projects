@@ -1,0 +1,25 @@
+extends: base.yaml
+
+env:
+  id: BipedalWalker-v3
+  normalize_obs: true
+  normalize_reward: true
+
+method: actor_critic
+algorithm: sac
+gamma: 0.99
+tau: 0.005
+target_entropy: auto
+alpha: auto
+
+actor:
+  lr: 0.0003
+critic:
+  lr: 0.0003
+
+replay:
+  capacity: 1000000
+  batch_size: 256
+  start_learning: 10000
+
+train_steps: 1200000

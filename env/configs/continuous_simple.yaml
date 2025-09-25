@@ -1,0 +1,19 @@
+extends: base.yaml
+
+env:
+  id: Pendulum-v1
+  normalize_obs: true
+  normalize_reward: true
+
+method: policy_gradient
+algorithm: reinforce_gaussian
+gamma: 0.99
+entropy_coef: 0.001
+
+baseline:
+  use_value_fn: true
+  value_lr: 0.001
+
+runner:
+  steps_per_episode_cap: 200           # if your runner needs it
+train_steps: 300000
