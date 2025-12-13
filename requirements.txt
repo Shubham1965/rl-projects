@@ -1,0 +1,6 @@
+gymnasium[toy-text]>=0.28
+matplotlib>=3.7
+numpy>=1.24
+seaborn>=0.13
+pytest>=7.4
+ruff>=0.4

@@ -1,10 +1,13 @@
+from collections import defaultdict
+from typing import Dict, List, Tuple
+
 import gymnasium as gym
 import numpy as np
-from typing import Dict, Tuple, List
-from collections import defaultdict
+
 from .policies import greedy_action
 
 State = Tuple[int, int, bool]
+
 
 def mc_control_exploring_starts(env_id: str, gamma: float = 1.0, episodes: int = 500000):
     """

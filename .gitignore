@@ -1,2 +1,12 @@
-monte_carlo_methods/__pycache__
-tabular_methods/__pycache__
+__pycache__/
+*.py[cod]
+*.egg-info
+.pytest_cache/
+.ruff_cache/
+.venv/
+.env
+.envrc
+.mypy_cache/
+.idea/
+.vscode/
+.DS_Store

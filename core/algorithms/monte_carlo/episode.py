@@ -1,6 +1,7 @@
-from typing import List, Tuple, Any
+from typing import Any, List, Tuple
 
 Transition = Tuple[Any, int, float]  # (state, action, reward)
+
 
 def compute_returns(episode: List[Transition], gamma: float):
     """
@@ -9,7 +10,7 @@ def compute_returns(episode: List[Transition], gamma: float):
     """
     G = 0.0
     out = []
-    for (s, a, r) in reversed(episode):
+    for s, a, r in reversed(episode):
         G = gamma * G + r
         out.append((s, a, G))
     out.reverse()

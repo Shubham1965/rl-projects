@@ -1,10 +1,13 @@
+from collections import defaultdict
+from typing import Callable, List, Tuple
+
 import gymnasium as gym
 import numpy as np
-from typing import Dict, Tuple, List, Callable
-from collections import defaultdict
+
 from .episode import compute_returns
 
 State = Tuple[int, int, bool]
+
 
 def generate_episode(env, policy_fn: Callable[[State], int]) -> List[Tuple[State, int, float]]:
     episode = []
@@ -18,8 +21,10 @@ def generate_episode(env, policy_fn: Callable[[State], int]) -> List[Tuple[State
         done = term or trunc
     return episode
 
-def mc_state_value_prediction(env_id: str, policy_fn, gamma: float, episodes: int,
-                              first_visit: bool = True):
+
+def mc_state_value_prediction(
+    env_id: str, policy_fn, gamma: float, episodes: int, first_visit: bool = True
+):
     env = gym.make(env_id, sab=True)  # sab=True = Sutton & Barto’s rules
     returns = defaultdict(list)
     V = defaultdict(float)

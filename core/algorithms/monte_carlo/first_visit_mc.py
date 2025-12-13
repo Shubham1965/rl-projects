@@ -1,15 +1,19 @@
-import numpy as np
 from collections import defaultdict
-from typing import Dict, Tuple, List
+from typing import Dict, List, Tuple
+
+import numpy as np
+
 from .episode import compute_returns
 
 State = Tuple[int, int, bool]
+
 
 class FirstVisitMCPrediction:
     """
     First-visit Monte-Carlo state-value prediction for episodic tasks.
     Tracks V(s) and returns its running mean.
     """
+
     def __init__(self, gamma: float = 1.0):
         self.gamma = gamma
         self.returns: Dict[State, List[float]] = defaultdict(list)

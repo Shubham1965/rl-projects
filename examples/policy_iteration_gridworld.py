@@ -1,12 +1,12 @@
-import numpy as np
-from env.grid_world import GridWorld, GridWorldVisualization
-from tabular_methods.temporal_difference import *
+from core.algorithms.tabular.dynamic_programming import PolicyIteration
+from core.env.grid_world import GridWorld, GridWorldVisualization
 
+# simple grid
 nrows = 4
-ncols = 8
-start_state = (3, 0)
-goal_state = (3, 7)
-obstacles = [(3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6)]
+ncols = 4
+start_state = (0, 0)
+goal_state = (3, 3)
+obstacles = [(1, 1), (0, 2)]
 
 # hard grid
 # nrows = 20
@@ -22,11 +22,13 @@ obstacles = [(3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6)]
 
 grid_world = GridWorld(nrows, ncols, start_state, goal_state)
 grid_world.add_obstacles(obstacles)
-grid_world.add_rewards(-1.0, -1.0, -100.0)
+grid_world.add_rewards(-1.0, 100.0)
+grid_world.dynamics()
+policy = grid_world.random_policy()
 
-sarsa_agent = SARSA(grid_world, alpha=0.1, gamma=0.95, epsilon=0.1, num_episodes=1000)
-value, policy, rewards = sarsa_agent.train()
-sarsa_agent.plot_rewards(rewards, per_episode=10)
+# Policy Iteration:
+V, policy = PolicyIteration(grid_world, theta=0.0001)
 
+# Visualization results:
 visualization = GridWorldVisualization(grid_world)
-visualization.plot_grid_with_arrows(grid_world, policy, fig_name="sarsa_cliffWorld")
+visualization.plot_grid_with_arrows(grid_world, policy, fig_name="policy_iteration_gridworld")

@@ -1,11 +1,14 @@
-# monte_carlo_methods/mc_control_offpolicy_every_visit_is.py
+# Off-policy EV MC control with importance sampling (Blackjack-v1)
+from collections import defaultdict
+from typing import Dict, List, Tuple
+
 import gymnasium as gym
 import numpy as np
-from typing import Dict, Tuple, List
-from collections import defaultdict
+
 from .policies import make_epsilon_greedy
 
 State = Tuple[int, int, bool]
+
 
 def offpolicy_every_visit_mc_control_is(
     env_id: str,
@@ -31,7 +34,9 @@ def offpolicy_every_visit_mc_control_is(
 
     behavior_policy = make_epsilon_greedy(Q, nA, behavior_epsilon)
 
-    greedy_prob = 1.0 - behavior_epsilon + behavior_epsilon / nA  # P_b of greedy action under ε-greedy
+    greedy_prob = (
+        1.0 - behavior_epsilon + behavior_epsilon / nA
+    )  # P_b of greedy action under ε-greedy
 
     for _ in range(episodes):
         # Generate episode from behavior
@@ -60,7 +65,7 @@ def offpolicy_every_visit_mc_control_is(
 
             # Behavior prob for the greedy action under ε-greedy
             b = greedy_prob  # strictly > 0 as long as ε < 1
-            W *= 1.0 / b     # since pi(a|s)=1 for greedy action
+            W *= 1.0 / b  # since pi(a|s)=1 for greedy action
 
             if weighted:
                 # Weighted IS: Q <- weighted running average with weight sum C_w

@@ -1,12 +1,12 @@
-# monte_carlo_methods/mc_learning_curves.py
 # Learning curves (average return vs. episodes) for Blackjack-v1
 # Requires: gymnasium, numpy, matplotlib
 
-import gymnasium as gym
-import numpy as np
-import matplotlib.pyplot as plt
 from collections import defaultdict
-from typing import Dict, Tuple, List, Callable
+from typing import Callable, Dict, List, Tuple
+
+import gymnasium as gym
+import matplotlib.pyplot as plt
+import numpy as np
 
 State = Tuple[int, int, bool]
 
@@ -33,17 +33,20 @@ def greedy_from_Q(Q: Dict[State, np.ndarray]) -> Callable[[State], int]:
         if s not in Q:
             Q[s] = np.zeros(2, dtype=np.float64)
         return int(np.argmax(Q[s]))
+
     return pi
 
 
 def eps_greedy_from_Q(Q: Dict[State, np.ndarray], eps: float) -> Callable[[State], int]:
     nA = 2
+
     def pi(s: State) -> int:
         if s not in Q:
             Q[s] = np.zeros(nA, dtype=np.float64)
         if np.random.rand() < eps:
             return np.random.randint(nA)
         return int(np.argmax(Q[s]))
+
     return pi
 
 
@@ -194,7 +197,7 @@ def run_offpolicy_wis(
             if at != greedy_a:
                 break  # pi=0 ⇒ ratio 0 ⇒ stop
             b = greedy_prob
-            W *= 1.0 / b              # pi=1 for greedy action
+            W *= 1.0 / b  # pi=1 for greedy action
             C[(st, at)] += W
             Q[st][at] += (W / C[(st, at)]) * (G - Q[st][at])
 
@@ -228,7 +231,9 @@ def main():
 
     save_line(es_x, es_y, "Exploring Starts — Learning Curve", "es_learning_curve.png")
     save_line(on_x, on_y, "On-Policy FV MC — Learning Curve", "onpolicy_learning_curve.png")
-    save_line(off_x, off_y, "Off-Policy EV MC (WIS) — Learning Curve", "offpolicy_wis_learning_curve.png")
+    save_line(
+        off_x, off_y, "Off-Policy EV MC (WIS) — Learning Curve", "offpolicy_wis_learning_curve.png"
+    )
 
     # Combined figure for quick comparison
     plt.figure()
