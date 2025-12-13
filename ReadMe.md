@@ -11,6 +11,20 @@ You'll see the implementation of the classical reinforcement learning algorithms
  - Actor Critic methods (DDPG, PPO, TRPO, A3C, TD3, SAC)
  - Model Based methods (Dyna-Q, PETS)
 
+## Project layout
+- `core/algorithms/monte_carlo`: Blackjack Monte Carlo prediction and control.
+- `core/algorithms/tabular`: Dynamic programming and temporal-difference methods for grid worlds.
+- `core/env`: The grid world environment and configs.
+- `core/utils`: Small numeric helpers.
+- `examples`: Runnable scripts demonstrating the algorithms.
+- `tests`: Placeholder suite ready for real unit tests.
+- `results`: Saved figures produced by the examples.
+
+## Setup
+- Install dependencies: `pip install -r requirements.txt`
+- (Optional) Editable install with dev tools: `pip install -e .[dev]`
+- Lint/format/test: `ruff format --check . && ruff check . && pytest`
+
 ## Dynamic Programming
 Dynamic programming (DP) is a powerful approach to solving reinforcement learning problems by breaking them down into smaller subproblems and solving them iteratively. One of the key concepts in DP is the notion of policy iteration.
 
@@ -24,7 +38,7 @@ These two steps are repeated iteratively until the policy converges to the optim
 
 - ### Policy Iteration: 
 
-    The following code snippets perform policy iteration on a grid world from `policy_iteration_gridworld.py`.
+    The following code snippets perform policy iteration on a grid world from `examples/policy_iteration_gridworld.py`.
 
     First, it defines the dimensions of the grid world, the start state, the goal state, and the locations of obstacles. Then, it creates an instance of the GridWorld class with these parameters.
  
@@ -65,7 +79,7 @@ In fact, the policy evaluation step of policy iteration can be truncated in seve
 
 
 - ### Value Iteration
-    The file `value_iteration_gridworld.py` has the exact similar structure as above which results in the same policy but since it performs only on step of policy evaluation instead of converging, it is much faster than `policy_iteration_gridworld.py`. In order to check the performance of both try running the hard grid problem for both and time it. Following is the result for the hard grid problem using value iteration.
+    The file `examples/value_iteration_gridworld.py` has the exact similar structure as above which results in the same policy but since it performs only on step of policy evaluation instead of converging, it is much faster than `examples/policy_iteration_gridworld.py`. In order to check the performance of both try running the hard grid problem for both and time it. Following is the result for the hard grid problem using value iteration.
 
     ![Results of Policy Iteration ](results/value_iteration_gridworld.png)
 
@@ -189,7 +203,7 @@ Monte Carlo (MC) methods, on the other hand, involve learning from experience by
 
 Temporal Difference learning bridges the gap between DP and MC methods by updating value estimates based on a combination of bootstrapping (using current estimates to update future estimates) and sampling (using actual experiences). Instead of waiting until the end of an episode to update value estimates, TD methods update them after each time step based on the observed reward and the estimate of the value of the next state.
 
-Here, I'm showing you the results on the classic cliff world example using SARSA (on-policy control TD(0)) and Q-learning (off-policy control TD(0)). Fell free to run the scripts named ``sarsa_cliffworld.py`` and ``qLearning_cliffworld.py ``.
+Here, I'm showing you the results on the classic cliff world example using SARSA (on-policy control TD(0)) and Q-learning (off-policy control TD(0)). Feel free to run the scripts named ``examples/sarsa_cliffworld.py`` and ``examples/qLearning_cliffworld.py``.
 
 
 - SARSA Rewards: 

@@ -1,6 +1,5 @@
-import numpy as np
-from env.grid_world import GridWorld, GridWorldVisualization
-from tabular_methods.temporal_difference import *
+from core.algorithms.tabular.temporal_difference import SARSA
+from core.env.grid_world import GridWorld, GridWorldVisualization
 
 nrows = 4
 ncols = 8
@@ -24,9 +23,9 @@ grid_world = GridWorld(nrows, ncols, start_state, goal_state)
 grid_world.add_obstacles(obstacles)
 grid_world.add_rewards(-1.0, -1.0, -100.0)
 
-qlearning_agent = QLearning(grid_world, alpha=0.1, gamma=0.95, epsilon=0.1, num_episodes=1000)
-value, policy, rewards = qlearning_agent.train()
-qlearning_agent.plot_rewards(rewards, per_episode=10)
+sarsa_agent = SARSA(grid_world, alpha=0.1, gamma=0.95, epsilon=0.1, num_episodes=1000)
+value, policy, rewards = sarsa_agent.train()
+sarsa_agent.plot_rewards(rewards, per_episode=10)
 
 visualization = GridWorldVisualization(grid_world)
-visualization.plot_grid_with_arrows(grid_world, policy, fig_name="qlearning_cliffWorld")
+visualization.plot_grid_with_arrows(grid_world, policy, fig_name="sarsa_cliffWorld")

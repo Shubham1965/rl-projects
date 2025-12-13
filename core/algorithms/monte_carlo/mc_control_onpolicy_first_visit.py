@@ -1,15 +1,17 @@
+from collections import defaultdict
+from typing import Dict, Tuple
+
 import gymnasium as gym
 import numpy as np
-from typing import Dict, Tuple, List
-from collections import defaultdict
+
 from .policies import make_epsilon_greedy
 
 State = Tuple[int, int, bool]
 
-def onpolicy_first_visit_mc_control(env_id: str,
-                                    gamma: float = 1.0,
-                                    episodes: int = 500000,
-                                    epsilon: float = 0.1):
+
+def onpolicy_first_visit_mc_control(
+    env_id: str, gamma: float = 1.0, episodes: int = 500000, epsilon: float = 0.1
+):
     """
     On-policy First-Visit MC Control with ε-greedy policy improvement (GLIE-style).
     """

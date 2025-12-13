@@ -1,8 +1,15 @@
 name: rl-projects
 channels:
- - defaults
- - conda-forge
- 
+  - conda-forge
+  - defaults
+
 dependencies:
- - python=3.10
- - pip-tools
+  - python=3.11
+  - pip
+  - numpy>=1.24
+  - matplotlib>=3.7
+  - seaborn>=0.13
+  - pip:
+      - gymnasium[toy-text]>=0.28
+      - pytest>=7.4
+      - ruff>=0.4
