@@ -6,9 +6,9 @@ You'll see the implementation of the classical reinforcement learning algorithms
  - Dynamic Programming (Policy and Value Iteration)
  - Monte Carlo Methods (Prediction and Control)
  - Temporal Difference (SARSA and Q-Learning) 
- - Value Function Approximation (DQN)
+ - Value Function Approximation (DQN, DDQN)
  - Policy gradient methods (REINFORCE)
- - Actor Critic methods (DDPG, PPO, TRPO, A3C, TD3, SAC)
+ - Actor Critic methods (DDPG, PPO, TRPO, A2C, TD3, SAC, RPO, AMP)
  - Model Based methods (Dyna-Q, PETS)
 
 ## Project layout
