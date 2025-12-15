@@ -49,9 +49,7 @@ def _exploring_start_episode(env, Q: Dict[State, np.ndarray]) -> Episode:
     return episode
 
 
-def mc_control_exploring_starts(
-    env_id: str, gamma: float = 1.0, episodes: int = 500_000
-):
+def mc_control_exploring_starts(env_id: str, gamma: float = 1.0, episodes: int = 500_000):
     """
     Monte-Carlo control with Exploring Starts (ES).
     Assumes we can start from any (s,a) with non-zero probability.
