@@ -94,7 +94,7 @@ class SARSA:
         plt.xlabel("Episode")
         plt.ylabel("Reward")
         plt.title(f"Average Reward per {per_episode} Episode")
-        plt.savefig("results/sarsa_rewards.png")
+        plt.savefig("../../results/sarsa_rewards.png")
         plt.show()
 
     def plot_q_table(self, q_table: dict):
@@ -132,7 +132,7 @@ class SARSA:
         plt.colorbar(label="Q-value")
         plt.gca().invert_yaxis()  # Invert y-axis to align with matrix
         plt.grid(True)  # Add gridlines
-        plt.savefig("results/sarsa_q_table.png")
+        plt.savefig("../../results/sarsa_q_table.png")
         plt.show()
 
 
@@ -224,7 +224,7 @@ class QLearning:
         plt.xlabel("Episode")
         plt.ylabel("Reward")
         plt.title(f"Average Reward per {per_episode} Episode")
-        plt.savefig("results/q_learning_rewards.png")
+        plt.savefig("../../results/q_learning_rewards.png")
         plt.show()
 
     def plot_q_table(self, q_table: dict):
@@ -262,5 +262,5 @@ class QLearning:
         plt.colorbar(label="Q-value")
         plt.gca().invert_yaxis()  # Invert y-axis to align with matrix
         plt.grid(True)  # Add gridlines
-        plt.savefig("results/q_learning_q_table.png")
+        plt.savefig("../../results/q_learning_q_table.png")
         plt.show()

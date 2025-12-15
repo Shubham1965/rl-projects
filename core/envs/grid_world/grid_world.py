@@ -380,5 +380,5 @@ class GridWorldVisualization:
         plt.grid()
 
         plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left", borderaxespad=0.0)
-        plt.savefig("results/" + fig_name + ".png")
+        plt.savefig("../../results/" + fig_name + ".png")
         plt.show()

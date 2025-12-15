@@ -42,14 +42,14 @@ def main():
     print(f"[Off-Policy EV Control (WIS)] Q states: {len(Q_off)}")
 
     # For prediction (V)
-    plot_value_heatmaps(V_fv, title_prefix="First-Visit MC V", fname_prefix="results/fv_V")
-    plot_value_heatmaps(V_ev, title_prefix="Every-Visit MC V", fname_prefix="results/fv_V")
+    plot_value_heatmaps(V_fv, title_prefix="First-Visit MC V", fname_prefix="../../results/fv_V")
+    plot_value_heatmaps(V_ev, title_prefix="Every-Visit MC V", fname_prefix="../../results/fv_V")
 
     # For control (Q → policy)
-    plot_policy_from_Q(Q_es, title="Exploring Starts Greedy Policy", fname="results/es_policy")
-    plot_policy_from_Q(Q_on, title="On-Policy FV MC Greedy Policy", fname="results/onpolicy_policy")
+    plot_policy_from_Q(Q_es, title="Exploring Starts Greedy Policy", fname="../../results/es_policy")
+    plot_policy_from_Q(Q_on, title="On-Policy FV MC Greedy Policy", fname="../../results/onpolicy_policy")
     plot_policy_from_Q(
-        Q_off, title="Off-Policy EV MC (WIS) Greedy Policy", fname="results/offpolicy_wis_policy"
+        Q_off, title="Off-Policy EV MC (WIS) Greedy Policy", fname="../../results/offpolicy_wis_policy"
     )
 
 
