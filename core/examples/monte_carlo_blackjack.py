@@ -1,5 +1,4 @@
 import numpy as np
-
 from core.algorithms.monte_carlo.control import (
     mc_control_exploring_starts,
     offpolicy_every_visit_mc_control_is,
@@ -45,10 +44,16 @@ def main():
     plot_value_heatmaps(V_ev, title_prefix="Every-Visit MC V", fname_prefix="../../results/fv_V")
 
     # For control (Q → policy)
-    plot_policy_from_Q(Q_es, title="Exploring Starts Greedy Policy", fname="../../results/es_policy")
-    plot_policy_from_Q(Q_on, title="On-Policy FV MC Greedy Policy", fname="../../results/onpolicy_policy")
     plot_policy_from_Q(
-        Q_off, title="Off-Policy EV MC (WIS) Greedy Policy", fname="../../results/offpolicy_wis_policy"
+        Q_es, title="Exploring Starts Greedy Policy", fname="../../results/es_policy"
+    )
+    plot_policy_from_Q(
+        Q_on, title="On-Policy FV MC Greedy Policy", fname="../../results/onpolicy_policy"
+    )
+    plot_policy_from_Q(
+        Q_off,
+        title="Off-Policy EV MC (WIS) Greedy Policy",
+        fname="../../results/offpolicy_wis_policy",
     )
 
 
