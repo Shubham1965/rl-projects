@@ -1,4 +1,4 @@
-from core.env.grid_world import GridWorld, GridWorldVisualization
+from core.envs.grid_world.grid_world import GridWorld, GridWorldVisualization
 
 if __name__ == "__main__":
     nrows = 4

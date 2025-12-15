@@ -1,5 +1,5 @@
 from core.algorithms.tabular.dynamic_programming import ValueIteration
-from core.env.grid_world import GridWorld, GridWorldVisualization
+from core.envs.grid_world.grid_world import GridWorld, GridWorldVisualization
 
 # nrows = 4
 # ncols = 4

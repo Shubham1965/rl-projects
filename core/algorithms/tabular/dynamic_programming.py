@@ -1,6 +1,6 @@
 import numpy as np
 
-from core.env.grid_world import GridWorld
+from core.envs.grid_world.grid_world import GridWorld
 
 
 def PolicyEvaluation(env: GridWorld, policy: dict, theta: float):

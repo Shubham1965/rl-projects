@@ -1,5 +1,5 @@
 from core.algorithms.tabular.temporal_difference import QLearning
-from core.env.grid_world import GridWorld, GridWorldVisualization
+from core.envs.grid_world.grid_world import GridWorld, GridWorldVisualization
 
 nrows = 4
 ncols = 8

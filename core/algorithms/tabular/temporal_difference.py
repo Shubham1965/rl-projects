@@ -3,7 +3,7 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 
-from core.env.grid_world import GridWorld
+from core.envs.grid_world.grid_world import GridWorld
 
 
 class SARSA:
