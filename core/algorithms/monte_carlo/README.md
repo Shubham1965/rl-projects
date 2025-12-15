@@ -4,6 +4,11 @@ This folder contains implementations and experiments of Monte-Carlo (MC) predict
 
 ---
 
+### Utilities
+- Plotting helpers for Blackjack value/policy heatmaps now live in `core/utils/plotting.py` so they can be reused by Monte-Carlo and temporal-difference methods.
+
+---
+
 ### Algorithms & Math
 
 ### 1. Monte Carlo Prediction
@@ -106,4 +111,3 @@ Returns are evaluated under the current greedy policy every few thousand episode
 - **Exploring Starts** control converges quickly to near-optimal strategy.  
 - **On-Policy ε-greedy** works but is slower and noisier.  
 - **Off-Policy IS** is theoretically correct, but in Blackjack the variance is large, and practical convergence is poor without many more episodes.  
-

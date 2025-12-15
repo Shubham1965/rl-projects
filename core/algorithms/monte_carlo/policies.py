@@ -28,6 +28,16 @@ def greedy_action(Q: Dict[State, np.ndarray], state: State) -> int:
     return int(np.argmax(Q[state]))
 
 
+def greedy_policy(Q: Dict[State, np.ndarray], nA: int) -> Callable[[State], int]:
+    """Deterministic policy wrapper around greedy_action for evaluation."""
+    def policy_fn(state: State) -> int:
+        if state not in Q:
+            Q[state] = np.zeros(nA, dtype=np.float64)
+        return int(np.argmax(Q[state]))
+
+    return policy_fn
+
+
 def tabular_softmax_policy(
     Q: Dict[State, np.ndarray], tau: float, nA: int
 ) -> Callable[[State], int]:

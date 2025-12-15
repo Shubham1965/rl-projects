@@ -1,42 +1,75 @@
 from collections import defaultdict
-from typing import Callable, List, Tuple
+from typing import Callable, Dict
 
 import gymnasium as gym
 import numpy as np
 
-from .episode import compute_returns
+from .common import Episode, State, compute_returns, generate_episode
 
-State = Tuple[int, int, bool]
+ValueFunction = Dict[State, float]
 
 
-def generate_episode(env, policy_fn: Callable[[State], int]) -> List[Tuple[State, int, float]]:
-    episode = []
-    s, _ = env.reset()
-    done = False
-    while not done:
-        a = policy_fn(s)
-        ns, r, term, trunc, _ = env.step(a)
-        episode.append((s, a, r))
-        s = ns
-        done = term or trunc
-    return episode
+class _BaseMCPrediction:
+    """Shared logic for Monte-Carlo state-value prediction."""
+
+    def __init__(self, gamma: float = 1.0, first_visit: bool = True):
+        self.gamma = gamma
+        self.first_visit = first_visit
+        self.returns = defaultdict(list)
+        self.V: ValueFunction = defaultdict(float)
+
+    def update_from_episode(self, episode: Episode):
+        seen = set()
+        for state, _action, Gt in compute_returns(episode, self.gamma):
+            if self.first_visit and state in seen:
+                continue
+            seen.add(state)
+            self.returns[state].append(Gt)
+            self.V[state] = float(np.mean(self.returns[state]))
+
+
+class FirstVisitMCPrediction(_BaseMCPrediction):
+    """
+    First-visit Monte-Carlo state-value prediction for episodic tasks.
+    Tracks V(s) and returns its running mean.
+    """
+
+    def __init__(self, gamma: float = 1.0):
+        super().__init__(gamma=gamma, first_visit=True)
+
+
+class EveryVisitMCPrediction(_BaseMCPrediction):
+    """Every-visit Monte-Carlo state-value prediction for episodic tasks."""
+
+    def __init__(self, gamma: float = 1.0):
+        super().__init__(gamma=gamma, first_visit=False)
 
 
 def mc_state_value_prediction(
-    env_id: str, policy_fn, gamma: float, episodes: int, first_visit: bool = True
-):
+    env_id: str,
+    policy_fn: Callable[[State], int],
+    gamma: float,
+    episodes: int,
+    first_visit: bool = True,
+) -> ValueFunction:
+    """
+    Generic MC prediction driver that dispatches to first- or every-visit updates.
+    """
     env = gym.make(env_id, sab=True)  # sab=True = Sutton & Barto’s rules
-    returns = defaultdict(list)
-    V = defaultdict(float)
+    predictor: _BaseMCPrediction = (
+        FirstVisitMCPrediction(gamma) if first_visit else EveryVisitMCPrediction(gamma)
+    )
 
     for _ in range(episodes):
-        ep = generate_episode(env, policy_fn)
-        seen = set()
-        for t, (s, a, Gt) in enumerate(compute_returns(ep, gamma)):
-            if first_visit and s in seen:
-                continue
-            seen.add(s)
-            returns[s].append(Gt)
-            V[s] = float(np.mean(returns[s]))
+        episode = generate_episode(env, policy_fn)
+        predictor.update_from_episode(episode)
+
     env.close()
-    return V
+    return predictor.V
+
+
+__all__ = [
+    "EveryVisitMCPrediction",
+    "FirstVisitMCPrediction",
+    "mc_state_value_prediction",
+]

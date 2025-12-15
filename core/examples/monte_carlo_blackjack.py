@@ -1,13 +1,12 @@
 import numpy as np
-from core.algorithms.monte_carlo.mc_control_exploring_starts import mc_control_exploring_starts
-from core.algorithms.monte_carlo.mc_control_offpolicy_every_visit_is import (
+
+from core.algorithms.monte_carlo.control import (
+    mc_control_exploring_starts,
     offpolicy_every_visit_mc_control_is,
-)
-from core.algorithms.monte_carlo.mc_control_onpolicy_first_visit import (
     onpolicy_first_visit_mc_control,
 )
 from core.algorithms.monte_carlo.mc_prediction import mc_state_value_prediction
-from core.algorithms.monte_carlo.visualization import plot_policy_from_Q, plot_value_heatmaps
+from core.utils.plotting import plot_policy_from_Q, plot_value_heatmaps
 
 
 def random_policy_blackjack(state):  # 50/50 hit/stick
