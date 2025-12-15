@@ -43,7 +43,7 @@ These two steps are repeated iteratively until the policy converges to the optim
         visualization = GridWorldVisualization(grid_world)
         visualization.plot_grid_with_arrows(grid_world, policy)
 
-    ![Results of Policy Iteration ](results/policy_iteration_gridworld.png)
+    ![Results of Policy Iteration ](../../results/policy_iteration_gridworld.png)
 
 
 One drawback to policy iteration is that each of its iterations involves policy evaluation, which may itself be a protracted iterative computation requiring multiple sweeps through the state set.  Must we wait for exact convergence, or can we stop short of that? 
@@ -54,7 +54,7 @@ In fact, the policy evaluation step of policy iteration can be truncated in seve
 - ### Value Iteration
     The file `examples/value_iteration_gridworld.py` has the exact similar structure as above which results in the same policy but since it performs only on step of policy evaluation instead of converging, it is much faster than `examples/policy_iteration_gridworld.py`. In order to check the performance of both try running the hard grid problem for both and time it. Following is the result for the hard grid problem using value iteration.
 
-    ![Results of Policy Iteration ](results/value_iteration_gridworld.png)
+    ![Results of Policy Iteration ](../../results/value_iteration_gridworld.png)
 
 
 ## Temporal Difference
@@ -71,16 +71,16 @@ Here, I'm showing you the results on the classic cliff world example using SARSA
 
 
 - SARSA Rewards: 
-![](results/sarsa_rewards.png) 
+![](../../results/sarsa_rewards.png) 
 
 - SARSA policy and optimal trajectory: 
-![](results/sarsa_cliffWorld.png) 
+![](../../results/sarsa_cliffWorld.png) 
 
 - Q-learning Rewards: 
-![](results/q_learning_rewards.png) 
+![](../../results/q_learning_rewards.png) 
 
 - Q-learning policy and optimal trajectory:
-![](results/qlearning_cliffWorld.png) 
+![](../../results/qlearning_cliffWorld.png) 
 
 
 Q-learning learns values for the optimal policy, that which travels right along the edge of the cliff. Unfortunately, this re sults in its occasionally falling off the cliff because of the $\epsilon$-greedy action selection. Sarsa, on the other hand, takes the action selection into account and learns the longer but safer path through the upper part per epsiode of the grid.

@@ -70,22 +70,22 @@ This folder contains implementations and experiments of Monte-Carlo (MC) predict
 - With a **usable ace**, states around 19–21 have high positive value.  
 - With **no usable ace**, values are lower due to increased bust probability.
 
-![Value no usable ace](results/fv_V_no_usable_ace.png)  
-![Value usable ace](results/fv_V_usable_ace.png)
+![Value no usable ace](../../results/fv_V_no_usable_ace.png)  
+![Value usable ace](../../results/fv_V_usable_ace.png)
 
 ---
 
 ### Policies
 - **Exploring Starts Control** produces a clean greedy policy boundary: stick on 19+, hit below.  
-  ![Exploring Starts](results/es_policy_usable_ace.png)
+  ![Exploring Starts](../../results/es_policy_usable_ace.png)
 
 - **On-Policy FV MC Control (ε-greedy)** learns a similar boundary, but with some noise due to exploration.  
-  ![On-Policy usable ace](results/onpolicy_policy_usable_ace.png)  
-  ![On-Policy no usable ace](results/onpolicy_policy_no_usable_ace.png)
+  ![On-Policy usable ace](../../results/onpolicy_policy_usable_ace.png)  
+  ![On-Policy no usable ace](../../results/onpolicy_policy_no_usable_ace.png)
 
 - **Off-Policy EV MC Control (Weighted IS)** is more unstable in Blackjack (because episodes often deviate from the greedy target). The learned policy is patchy and converges slowly.  
-  ![Off-Policy WIS usable ace](results/offpolicy_wis_policy_usable_ace.png)  
-  ![Off-Policy WIS no usable ace](results/offpolicy_wis_policy_no_usable_ace.png)
+  ![Off-Policy WIS usable ace](../../results/offpolicy_wis_policy_usable_ace.png)  
+  ![Off-Policy WIS no usable ace](../../results/offpolicy_wis_policy_no_usable_ace.png)
 
 ---
 
@@ -97,7 +97,7 @@ Returns are evaluated under the current greedy policy every few thousand episode
 - **On-Policy FV MC** improves gradually but is noisier due to ε-greedy exploration.  
 - **Off-Policy EV MC (Weighted IS)** shows unstable learning with high variance.
 
-![Learning curves combined](results/mc_control_learning_curves.png)
+![Learning curves combined](../../results/mc_control_learning_curves.png)
 
 ---
 
