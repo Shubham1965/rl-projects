@@ -4,8 +4,8 @@ from typing import Dict, List, Tuple
 import gymnasium as gym
 import numpy as np
 from core.algorithms.monte_carlo.common import evaluate_policy, generate_episode
-from core.algorithms.monte_carlo.policies import greedy_policy, make_epsilon_greedy
 from core.utils.plotting import plot_learning_curve, plot_multiple_learning_curves
+from core.utils.policy_utils import greedy_policy, make_epsilon_greedy
 
 State = Tuple[int, int, bool]
 

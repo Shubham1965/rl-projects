@@ -1,5 +1,5 @@
 import numpy as np
-from core.algorithms.monte_carlo.control import (
+from core.algorithms.monte_carlo.mc_control import (
     mc_control_exploring_starts,
     offpolicy_every_visit_mc_control_is,
     onpolicy_first_visit_mc_control,

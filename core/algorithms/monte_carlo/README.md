@@ -6,6 +6,7 @@ This folder contains implementations and experiments of Monte-Carlo (MC) predict
 
 ### Utilities
 - Plotting helpers for Blackjack value/policy heatmaps now live in `core/utils/plotting.py` so they can be reused by Monte-Carlo and temporal-difference methods.
+- Tabular policy helpers (`ε`-greedy, greedy, softmax) were moved to `core/utils/policy_utils.py` for reuse across algorithms.
 
 ---
 

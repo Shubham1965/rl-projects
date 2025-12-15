@@ -4,8 +4,9 @@ from typing import Dict, List, Tuple
 import gymnasium as gym
 import numpy as np
 
+from core.utils.policy_utils import greedy_action, make_epsilon_greedy
+
 from .common import Episode, State, generate_episode
-from .policies import greedy_action, make_epsilon_greedy
 
 ActionReturns = Dict[Tuple[State, int], List[float]]
 
